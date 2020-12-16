@@ -1,3 +1,5 @@
+const final = [];
+
 function solution(clothes) {
 //     문제 분석
 //     스파이들은 매일 다른 옷을 조합하여 자신을 위장
@@ -26,19 +28,37 @@ function solution(clothes) {
         // 없으면 1로 넣어서 있다고 하고, 있으면 1씩 추가, 결과적으로 (cur : 갯수) 형태로 저장
 
         return acc;
-    }, {})
+    }, {});
     
-    let kindOfClothes = Object.values(clothesList);
+    let kindOfClothes = Object.values(clothesList); // [ 2, 1 ]  
+    const n = kindOfClothes.length;
 
-    console.log(kindOfClothes);
+    for(let i = 1; i <= n; i++){
+        combination(kindOfClothes, [], n, i, 0);
+    }
     
-    let ans = kindOfClothes.reduce((acc, cur, curIdx, arr) => {
-        for(let i = curIdx; i < arr.length; i++){
-            acc = acc +
+    // console.log(final);
+    
+    let answer = final.reduce((acc, cur) => {
+        let a = 1;
+        for(let i = 0; i < cur.length; i++){
+            a *= cur[i];
         }
-    })
+        acc += a;
+        
+        return acc;
+    }, 0);
     
-    
-    var answer = 0;
     return answer;
+}
+
+function combination(source, target, n, r, count) { 
+    if(r === 0)final.push(target); 
+    else if(n === 0 || n < r) return; 
+    else { 
+        target.push(source[count]); 
+        combination(source, Object.assign([], target), n - 1, r - 1, count + 1); 
+        target.pop(); 
+        combination(source, Object.assign([], target), n - 1, r, count + 1); 
+    } 
 }
