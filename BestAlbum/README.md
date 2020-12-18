@@ -18,4 +18,16 @@
 
 - acc[cur][i] = blahblah; <- 이런식으로 접근하면 됩니다.
 
+# 객체 -> 배열
+
+- 객체 내부의 값들을 정렬하기 위해서 객체를 배열로 변환하려면
+- const arr = Object.entries(obj);
+- 로 변환한다.
+
+# 배열의 정렬
+
+- 배열을 정렬하기 위해서는 arr.sort()함수를 사용하면 된다.
+- 기본적으로는 작은 값이 앞으로 오도록 정렬된다.
+- arr.sort(function(a,b){ return a-b; }) 와 같은 방식으로 sorting함수를 지정해 줄 수 있다.
+
 
