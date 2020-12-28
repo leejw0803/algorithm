@@ -1,36 +1,59 @@
 function solution(priorities, location) {
-    /* 문제분석
-     * 프린터는 인쇄 요청이 들어온 순서대로 인쇄
-     * 중요 문서를 먼저 인쇄하는 프린터를 개발
-     * 1. 인쇄 대기목록의 가장 앞에 있는 문서(J)를 대기목록에서 꺼냅니다.
-     * 2. 나머지 인쇄 대기목록에서 J보다 중요도가 높은 문서가 한 개라도 존재하면 J를 대기목록의 가장 마지막에 넣습니다.
-     * 3. 그렇지 않으면 J를 인쇄합니다.
-     * 앞에 있는 것 부터 꺼내서 순서를 매기자
-     * 맨 앞에서 하나를 뺀다.
-     * 배열을 돌면서 중요도 체크를 한다.
-     * 중요도가 높은 게 있다면, 다시 넣는다.
-     * 중요도가 높은 게 없다면, 인쇄 순서에 넣는다.
+    /*
+     * 후에 비교를 편하게 하기 위해서 
+     * locPrList = [[location, priority], [location, priority], .... ] 의 형태로 저장한다.
      */
-    
-    let printList = [];
-    
-    const pr = priorities.reduce((acc, cur, i) => {
+    const locPrList = priorities.reduce((acc, cur, i) => {
         acc[i] = [i , cur];
         
         return acc;
     }, []);
     
-    while(pr){
-        const compare = pr.shift();
-        for(let i = 0; i < pr.length; i++){
-            if(compare[1] < pr[i][1]){
-                pr.push(compare);
-                break;
-            }
-        }
-        // console.log("while문 안입니다.");
-        printList.push(compare);
+    /*
+     * 각 locPrList 의 원소들을 프린팅 순서대로 나열하여 push할 배열 order와 최종 답안 answer를 define.
+     */
+    const order = [];
+    let answer = 0;
+    
+    /*
+     * while 문을 돌면서 locPrList의 원소를 하나씩 빼서 비교 후, 
+     * 우선순위가 낮으면 locPrList에 넣고
+     * 우선순위가 높으면 order에 push한다.
+     * 결과적으로 locPrList의 원소를 전부 빼내면 order에 순서대로 담긴다.
+     */
+    while(locPrList.length > 0){
+        getOrder(locPrList, order);
     }
-    console.log(pr);
-    console.log(printList);
+    
+    /*
+     * order의 원소의 location 정보와 주어진 location을 비교하여 답을 구한다.
+     * 마지막으로 index에 1을 더해야 answer번째를 정확히 구할 수 있다.
+     */
+    for(let i = 0; i < order.length; i++){
+        if(order[i][0] === location){
+            answer = i+1;
+        }
+    }
+    
+    return answer;
+    
+    
+}
+
+function getOrder(locPrList, order){
+    const leng = locPrList.length;
+    const compare = locPrList.shift();
+    
+    /* 우선순위가 낮으면 locPrList에 push한다. */
+    for(let i = 0; i < locPrList.length; i++){
+        if(compare[1] < locPrList[i][1]){
+            locPrList.push(compare);
+            break;
+        }
+    }
+    
+    /* push하지 않고 끝났다면, 우선순위가 높다는 의미와 동시에 locPrList의 길이가 줄어들게 되므로 길이를 비교하여 order에 push */
+    if(leng > locPrList.length){
+        order.push(compare);
+    }
 }
