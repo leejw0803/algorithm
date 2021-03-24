@@ -12,6 +12,8 @@
 // 4. 해당 인덱스 전부 제거
 // 5. 더 이상 2 2가 없을 때까지 1-4를 반복
 
+// 왜 오류가 나는지 모르겟당 힝...
+
 const boom = [];
 
 function solution(m, n, board) {
@@ -21,29 +23,60 @@ function solution(m, n, board) {
     return item.split("");
   });
 
-  for (let i = 0; i < m - 1; i++) {
-    for (let j = 0; j < n - 1; j++) {
-      check(i, j, board);
+  while (true) {
+    for (let i = 0; i < m - 1; i++) {
+      for (let j = 0; j < n - 1; j++) {
+        check(i, j, board);
+      }
+    }
+
+    // console.log(board);
+
+    boom.forEach((item) => {
+      board[item[0]].splice(item[1], 1, "O");
+    });
+
+    // console.log(board);
+
+    for (let col = 0; col < n; col++) {
+      for (let row = 0; row < m; row++) {
+        if (board[row][col] === "O") {
+          down(row, col, board);
+        }
+      }
+    }
+    console.log(board);
+
+    if (!possable(board)) break;
+  }
+
+  return answer;
+}
+
+function possable(board) {
+  let isPossable = false;
+
+  for (let i = 0; i < board.length - 1; i++) {
+    for (let j = 0; j < board[i].length - 1; j++) {
+      if (
+        board[i][j] === board[i + 1][j + 1] &&
+        board[i][j] === board[i + 1][j] &&
+        board[i][j] === board[i][j + 1] &&
+        board[i][j] != "O"
+      ) {
+        isPossable = true;
+      }
     }
   }
-  console.log(board);
-  boom.forEach((item) => {
-    board[item[0]].splice(item[1], 1, "O");
-  });
-
-  console.log(board);
-
-  fo;
-
-  console.log(board);
-  return answer;
+  return isPossable;
 }
 
 function check(i, j, board) {
   if (
     board[i][j] === board[i + 1][j + 1] &&
     board[i][j] === board[i + 1][j] &&
-    board[i][j] === board[i][j + 1]
+    board[i][j] === board[i][j + 1] &&
+    board[i][j] != "O"
   ) {
     boom.push([i, j]);
     boom.push([i + 1, j]);
@@ -55,4 +88,18 @@ function check(i, j, board) {
   } else {
     return;
   }
+}
+
+function down(row, col, board) {
+  const col2row = [];
+  for (let i = 0; i < board.length; i++) {
+    col2row.push(board[i][col]);
+  }
+
+  col2row.splice(row, 1);
+  col2row.unshift("O");
+
+  col2row.forEach((item, idx) => {
+    board[idx][col] = item;
+  });
 }
