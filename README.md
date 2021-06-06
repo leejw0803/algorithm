@@ -1,7 +1,12 @@
-# js 및 python 알고리즘 문제 풀이입니다.
+### 1️⃣  This Repository contains some JavaScript and Python3 algorithm problem solving.
+> #### 이 repo는 자바스크립트와 파이썬 알고리즘 문제풀이 repo입니다.
 
-# programmers 와 leetcode 에 출제되는 문제들 중 일부를 풀이하고 있습니다.
+### 2️⃣  The problems came from <a href="https://programmers.co.kr/">Programmers</a> and <a href="https://leetcode.com/">Leetcode</a>.
+> #### 문제들은 programmers와 leetcode에 있습니다.
 
-# js 는 camel 표기법, python 은 snake 표기법을 사용합니다.
+### 3️⃣  JS is following the camel case, Python is following the snaked case.
+> #### 자바스크립트는 카멜케이스, 파이썬은 스네이크드케이스를 따릅니다.
 
-# 알고리즘 문제 풀이를 진행하면서 얻게 되는 insight를 Readme로 정리하여 작성합니다.
+### 4️⃣  Write the insight that I get from solving the algorithm problem by organizing it into README.md.
+> #### 문제풀이를 하며 얻게되는 인사이트를 README.md로 적습니다.
+
