@@ -1,0 +1,14 @@
+SELECT EMPLOYEE_ID, (
+    CASE
+        WHEN COUNT(*) >=4 THEN '최우수 사원'
+        WHEN COUNT(*) >=2 THEN '우수 사원'
+        ELSE '일반 사원' END
+) as '분류 상태', (
+    SELECT     
+    COUNT(*)
+    FROM SELLINGS B
+    WHERE B.EMPLOYEE_ID = S.EMPLOYEE_ID
+) as COUNT
+FROM SELLINGS S
+GROUP BY S.EMPLOYEE_ID
+ORDER BY S.EMPLOYEE_ID
